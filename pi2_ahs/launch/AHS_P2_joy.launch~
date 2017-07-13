@@ -1,0 +1,13 @@
+<launch>
+
+ <!-- joy node -->
+  <node respawn="true" pkg="joy"
+        type="joy_node" name="turtle_joy" >
+    <param name="dev" type="string" value="/dev/input/js0" />
+    <param name="deadzone" value="0.12" />
+  </node>
+
+ <!-- Axes -->
+  <node pkg="Pi2AHS" type="AHS_teleop_joy" name="teleop"/>
+
+</launch>

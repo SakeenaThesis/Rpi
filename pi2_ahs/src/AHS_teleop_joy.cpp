@@ -1,0 +1,48 @@
+#include <ros/ros.h>
+#include <sensor_msgs/Joy.h>
+#include <string>
+#include <csignal>
+ 
+ 
+ class TeleopAHS
+ {
+	 public:
+		 TeleopAHS();
+	 
+	 private:
+		 void joyCallback(const sensor_msgs::Joy::ConstPtr& joy);
+	 
+		 ros::NodeHandle nh_;
+	 
+		 int Acc, Trate;
+		 double AccFlo, TrateFlo;
+		 ros::Subscriber joy_sub_;
+	 
+ };
+ 
+ 
+ TeleopAHS::TeleopAHS():
+				Acc(0), Trate(0),
+				AccFlo(0.0), TrateFlo(0.0)
+ {
+   joy_sub_ = nh_.subscribe<sensor_msgs::Joy>("joy", 10, &TeleopAHS::joyCallback, this);
+ }
+ 
+ void TeleopAHS::joyCallback(const sensor_msgs::Joy::ConstPtr& joy)
+ {
+		AccFlo = 100*joy->axes[1];
+		Acc = (int)AccFlo;
+		TrateFlo = (-100)*joy->axes[3];
+		Trate = (int)TrateFlo;
+		std::cout << "Accel:"<< Acc << "   " << "TurnRate: " << Trate << std::endl;
+		std::cout << "..."<< std::endl;
+ }
+ 
+
+ int main(int argc, char** argv)
+ {
+	 std::cout << "ROS Teleop"<< std::endl;
+   ros::init(argc, argv, "teleop_AHS");
+   TeleopAHS teleop_AHS;
+   ros::spin();
+ }
