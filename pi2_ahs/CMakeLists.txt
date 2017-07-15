@@ -144,6 +144,10 @@ target_link_libraries(AHS_teleop_joy ${catkin_LIBRARIES})
 add_executable(pi2comms src/pi2comms.cpp)
 target_link_libraries(pi2comms ${catkin_LIBRARIES})
 add_dependencies(pi2comms pi2_ahs_generate_messages_cpp)
+
+add_executable(master_comms src/master_comms.cpp)
+target_link_libraries(master_comms ${catkin_LIBRARIES})
+add_dependencies(master_comms pi2_ahs_generate_messages_cpp)
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
 ## target back to the shorter version for ease of user use
