@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(pi2_ahs)
+project(master_ahs)
 
 ## Add support for C++11, supported in ROS Kinetic and newer
 # add_definitions(-std=c++11)
@@ -8,11 +8,11 @@ project(pi2_ahs)
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
-   joy
-   roscpp
-   rospy
-   std_msgs
-   message_generation
+  joy
+  roscpp
+  rospy
+  std_msgs
+  message_generation
 )
 
 ## System dependencies are found with CMake's conventions
@@ -51,7 +51,7 @@ find_package(catkin REQUIRED COMPONENTS
 # Generate messages in the 'msg' folder
  add_message_files(
    FILES
-   PiToMaster.msg
+   MasterToPis.msg
  )
 
 ## Generate services in the 'srv' folder
@@ -71,7 +71,7 @@ find_package(catkin REQUIRED COMPONENTS
 ## Generate added messages and services with any dependencies listed here
  generate_messages(
    DEPENDENCIES
-   std_msgs
+   std_msgs  # Or other packages containing msgs
  )
 
 ################################################
@@ -108,7 +108,7 @@ catkin_package(
 #  LIBRARIES learning_joy
 #  CATKIN_DEPENDS joy roscpp turtlesim
 #  DEPENDS system_lib
-CATKIN_DEPENDS message_runtime
+  CATKIN_DEPENDS message_runtime
 )
 
 ###########
@@ -136,13 +136,10 @@ include_directories(
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
 # add_executable(${PROJECT_NAME}_node src/learning_joy_node.cpp)
-add_executable(AHS_teleop_joy src/AHS_teleop_joy.cpp)
-target_link_libraries(AHS_teleop_joy ${catkin_LIBRARIES})
-#add_dependencies(AHS_teleop_joy pi2_ahs_generate_messages_cpp)
 
-add_executable(pi2comms src/pi2comms.cpp)
-target_link_libraries(pi2comms ${catkin_LIBRARIES})
-add_dependencies(pi2comms pi2_ahs_generate_messages_cpp)
+add_executable(master_comms src/master_comms.cpp)
+target_link_libraries(master_comms ${catkin_LIBRARIES})
+add_dependencies(master_comms master_ahs_generate_messages_cpp)
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the

@@ -1,14 +1,21 @@
 #include "ros/ros.h"
 #include <sensor_msgs/Joy.h>
 #include "pi2_ahs/PiToMaster.h"
+#include "master_ahs/MasterToPis.h"
 #include <string>
 #include <csignal>
 #include <sstream>
+
+
+// variables
+	int instruction;
+
 
 // defining the joy teleop class
  class TeleopAHS
  {
 	 public:
+		 int instruction;
 		 TeleopAHS();
 	 
 	 private:
@@ -41,12 +48,20 @@
 		std::cout << "..."<< std::endl;
  }
 
+//Master topic subsctription callback
+void masteroutCallback(const master_ahs::MasterToPis::ConstPtr& msg)
+{
+  instruction = msg->instruction_p2;
+  std::cout << "Instruction:"<< instruction << std::endl;
+}
+
 
 int main(int argc, char **argv)
 {
 
 //defining a dummy variable for testing location updates
   int count = 0;
+  instruction =0;
 
   ros::init(argc, argv, "pi2comms"); // initializing node
   std::cout << "Pi2"<< std::endl; // printing to show node has started running
@@ -58,11 +73,14 @@ int main(int argc, char **argv)
 // publishing pi status and location
   ros::Publisher pi2out_pub = n.advertise<pi2_ahs::PiToMaster>("pi2out", 1000);
 
+// subscribing to master messages
+  ros::Subscriber sub = n.subscribe("masterout", 1000, masteroutCallback);
 
 // looping through listen for messages and taking action
   ros::Rate loop_rate(10);
   while (ros::ok())
   {
+    teleop_AHS.instruction = instruction;
     pi2_ahs::PiToMaster msg;
 
 //***** Here we would update the status and location ****///

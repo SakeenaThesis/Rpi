@@ -1,0 +1,10 @@
+int32 instruction_p1
+int32 instruction_p2
+int32 instruction_p3
+int32 instruction_p4
+int32 instruction_p5
+int64 location_p1
+int64 location_p2
+int64 location_p3
+int64 location_p4
+int64 location_p5
