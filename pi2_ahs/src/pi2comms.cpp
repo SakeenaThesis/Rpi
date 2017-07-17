@@ -39,13 +39,21 @@
 // joy callback function when pi recieves a joy menssage
  void TeleopAHS::joyCallback(const sensor_msgs::Joy::ConstPtr& joy)
  {
-		/* when we start receiving instructions from master this will turn into a if statement. */
+	/* when we start receiving instructions from master this will turn into a if statement. */
+	if (instruction == 1)
+	{
 		AccFlo = 100*joy->axes[1];
 		Acc = (int)AccFlo;
 		TrateFlo = (-100)*joy->axes[3];
 		Trate = (int)TrateFlo;
 		std::cout << "Accel:"<< Acc << "   " << "TurnRate: " << Trate << std::endl;
 		std::cout << "..."<< std::endl;
+	}
+	else
+	{
+		//do nothing
+	}
+
  }
 
 //Master topic subsctription callback
@@ -69,6 +77,7 @@ int main(int argc, char **argv)
 
 //teleoperation (might need if statement and destructor) 
   TeleopAHS teleop_AHS;
+	teleop_AHS.instruction = 0;
 
 // publishing pi status and location
   ros::Publisher pi2out_pub = n.advertise<pi2_ahs::PiToMaster>("pi2out", 1000);
