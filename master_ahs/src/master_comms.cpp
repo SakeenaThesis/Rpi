@@ -11,17 +11,18 @@
 	int pi2loca =0;
 
 // flags for instructions keyboard input
-  bool quit_requested =false;
-	bool pi1 = false;
-	bool pi2 = false;
-	bool pi3 = false;
-	bool pi4 = false;
-	bool pi5 = false;
-	bool pi1manual = false;
-	bool pi2manual = false;
-	bool pi3manual = false;
-	bool pi4manual = false;
-	bool pi5manual = false;
+	bool quit_requested =false;
+	bool manualPi1 = false;
+	bool manualPi2 = false;
+	bool manualPi3 = false;
+	bool manualPi4 = false;
+	bool manualPi5 = false;
+	int selectPi = 0;
+	int instrPi1 = 0;
+	int instrPi2 = 0;
+	int instrPi3 = 0;
+	int instrPi4 = 0;
+	int instrPi5 = 0;
 
 	void keyboardInputLoop();
   void processKeyboardInput(char c);
@@ -74,132 +75,190 @@ void processKeyboardInput(char c)
 {
   switch (c)
   {
-    case '1':
+    case '1': 
     {
-			pi1 = true;
-			pi2 = false;
-			pi3 = false;
-			pi4 = false;
-			pi5 = false;
+			selectPi =1;
       break;
     }
     case '2':
     {
-			pi2 = true;
-			pi1 = false;
-			pi3 = false;
-			pi4 = false;
-			pi5 = false;
+			selectPi =2;
       break;
     }
     case '3':
     {
-			pi3 = true;
-			pi1 = false;
-			pi2 = false;
-			pi4 = false;
-			pi5 = false;
+			selectPi =3;
       break;
     }
     case '4':
     {
-			pi4 = true;
-			pi1 = false;
-			pi2 = false;
-			pi3 = false;
-			pi5 = false;
+			selectPi =4;
       break;
     }
     case '5':
     {
-			pi5 = true;
-			pi1 = false;
-			pi2 = false;
-			pi3 = false;
-			pi4 = false;
+			selectPi =5;
       break;
     }
-		case 32:
+		case 32: // reset space bar emergency stop
     {
 			quit_requested =false;
-			pi1 = false;
-			pi2 = false;
-			pi3 = false;
-			pi4 = false;
-			pi5 = false;
-			pi1manual = false;
-			pi2manual = false;
-			pi3manual = false;
-			pi4manual = false;
-			pi5manual = false; 
+			selectPi = 0;
+			instrPi1 = 0;
+			instrPi2 = 0;
+			instrPi3 = 0;
+			instrPi4 = 0;
+			instrPi5 = 0;
       break;
     }
-    case 'a':
+    case 'c': // clear selected pi
     {
-			if (pi1)
-			{
-				pi1manual = false;
-			}
-			else if(pi2)
-			{
-				pi2manual = false;
-			}
-			else if(pi3)
-			{
-				pi3manual = false;
-			}
-			else if(pi4)
-			{
-				pi4manual = false;
-			}
-			else if(pi5)
-			{
-				pi5manual = false;
-			}
-			else 
-			{
-				pi1manual = false;
-				pi2manual = false;
-				pi3manual = false;
-				pi4manual = false;
-				pi5manual = false;
-			}
+			selectPi = 0;
       break;
     }
     case 'm':
     {
-			if (pi1)
+			if (selectPi == 1)
 			{
-				pi1manual = true;
+				manualPi1 = !manualPi1;
+				manualPi2 = false;
+				manualPi3 = false;
+				manualPi4 = false;
+				manualPi5 = false;
 			}
-			else if(pi2)
+			else if(selectPi == 2)
 			{
-				pi2manual = true;
+				manualPi1 = false;
+				manualPi2 = !manualPi2;
+				manualPi3 = false;
+				manualPi4 = false;
+				manualPi5 = false;
 			}
-			else if(pi3)
+			else if(selectPi == 3)
 			{
-				pi3manual = true;
+				manualPi1 = false;
+				manualPi2 = false;
+				manualPi3 = !manualPi3;
+				manualPi4 = false;
+				manualPi5 = false;
 			}
-			else if(pi4)
+			else if(selectPi == 4)
 			{
-				pi4manual = true;
+				manualPi1 = false;
+				manualPi2 = false;
+				manualPi3 = false;
+				manualPi4 = !manualPi4;
+				manualPi5 = false;
 			}
-			else if(pi5)
+			else if(selectPi == 5)
 			{
-				pi5manual = true;
+				manualPi1 = false;
+				manualPi2 = false;
+				manualPi3 = false;
+				manualPi4 = false;
+				manualPi5 = !manualPi5;
 			}
 			else 
 			{
-				pi1manual = false;
-				pi2manual = true;
-				pi3manual = false;
-				pi4manual = false;
-				pi5manual = false;
+				manualPi1 = false;
+				manualPi2 = !manualPi2;
+				manualPi3 = false;
+				manualPi4 = false;
+				manualPi5 = false;
+			}
+      break;
+    }
+		case 'f':
+    {
+			if (selectPi == 1)
+			{
+				instrPi1 = 2;
+				manualPi1 = false;
+			}
+			else if(selectPi == 2)
+			{
+				instrPi2 = 2;
+				manualPi2 = false;
+			}
+			else if(selectPi == 3)
+			{
+				instrPi3 = 2;
+				manualPi3 = false;
+			}
+			else if(selectPi == 4)
+			{
+				instrPi4 = 2;
+				manualPi4 = false;
+			}
+			else if(selectPi == 5)
+			{
+				instrPi5 = 2;
+				manualPi5 = false;
+			}
+			else 
+			{
+				instrPi1 = 2;
+				instrPi2 = 2;
+				instrPi3 = 2;
+				instrPi4 = 2;
+				instrPi5 = 2;
+				manualPi1 = false;
+				manualPi2 = false;
+				manualPi3 = false;
+				manualPi4 = false;
+				manualPi5 = false;
+			}
+      break;
+    }
+		case 'd':
+    {
+			if (selectPi == 1)
+			{
+				instrPi1 = 3;
+				manualPi1 = false;
+			}
+			else if(selectPi == 2)
+			{
+				instrPi2 = 3;
+				manualPi2 = false;
+			}
+			else if(selectPi == 3)
+			{
+				instrPi3 = 3;
+				manualPi3 = false;
+			}
+			else if(selectPi == 4)
+			{
+				instrPi4 = 3;
+				manualPi4 = false;
+			}
+			else if(selectPi == 5)
+			{
+				instrPi5 = 3;
+				manualPi5 = false;
+			}
+			else 
+			{
+				instrPi1 = 3;
+				instrPi2 = 3;
+				instrPi3 = 3;
+				instrPi4 = 3;
+				instrPi5 = 3;
+				manualPi1 = false;
+				manualPi2 = false;
+				manualPi3 = false;
+				manualPi4 = false;
+				manualPi5 = false;
 			}
       break;
     }
     case 'q':
     {
+			instrPi1 = 0;
+			instrPi2 = 0;
+			instrPi3 = 0;
+			instrPi4 = 0;
+			instrPi5 = 0;
       quit_requested = true;
       break;
     }
@@ -234,58 +293,59 @@ int main(int argc, char **argv)
 // loop of publishing and subscribing
   while (ros::ok())
   {
+		if ((instrPi1 == 1) && (!manualPi1))
+		{
+			instrPi1 = 0;
+		}
+		if ((instrPi2 == 1) && (!manualPi2))
+		{
+			instrPi2 = 0;
+		}
+		if ((instrPi3 == 1) && (!manualPi3))
+		{
+			instrPi3 = 0;
+		}
+		if ((instrPi4 == 1) && (!manualPi4))
+		{
+			instrPi4 = 0;
+		}
+		if ((instrPi5 == 1) && (!manualPi5))
+		{
+			instrPi5 = 0;
+		}
 		// creating a master message
     master_ahs::MasterToPis msg;
-		
 		// altering the contents of the master message
-    if (pi1manual)
+    if (manualPi1)
 		{
-			msg.instruction_p1 = 1;
-			msg.instruction_p2 = 0;
-			msg.instruction_p3 = 0;
-			msg.instruction_p4 = 0;
-			msg.instruction_p5 = 0;
+			instrPi1 = 1;
 		}
-    else if (pi2manual)
+    else if (manualPi2)
 		{
-			msg.instruction_p1 = 0;
-			msg.instruction_p2 = 1;
-			msg.instruction_p3 = 0;
-			msg.instruction_p4 = 0;
-			msg.instruction_p5 = 0;
+			instrPi2 = 1;
 		}
-    else if (pi3manual)
+    else if (manualPi3)
 		{
-			msg.instruction_p1 = 0;
-			msg.instruction_p2 = 0;
-			msg.instruction_p3 = 1;
-			msg.instruction_p4 = 0;
-			msg.instruction_p5 = 0;
+			instrPi3 = 1;
 		}
-    else if (pi4manual)
+    else if (manualPi4)
 		{
-			msg.instruction_p1 = 0;
-			msg.instruction_p2 = 0;
-			msg.instruction_p3 = 0;
-			msg.instruction_p4 = 1;
-			msg.instruction_p5 = 0;
+			instrPi4 = 1;
 		}
-    else if (pi5manual)
+    else if (manualPi5)
 		{
-			msg.instruction_p1 = 0;
-			msg.instruction_p2 = 0;
-			msg.instruction_p3 = 0;
-			msg.instruction_p4 = 0;
-			msg.instruction_p5 = 1;
+			instrPi5 = 1;
 		}
 		else
 		{
-			msg.instruction_p1 = 0;
-			msg.instruction_p2 = 0;
-			msg.instruction_p3 = 0;
-			msg.instruction_p4 = 0;
-			msg.instruction_p5 = 0;
+			// change nothing
 		}
+		msg.instruction_p1 = instrPi1;
+		msg.instruction_p2 = instrPi2;
+		msg.instruction_p3 = instrPi3;
+		msg.instruction_p4 = instrPi4;
+		msg.instruction_p5 = instrPi5;
+
 		msg.location_p2 = pi2loca;
     
 		//publishing the master message
@@ -293,13 +353,15 @@ int main(int argc, char **argv)
 		ros::spinOnce();
 		loop_rate.sleep();
 
-		// printing stuff
+		// printing here
 		std::cout << "flags"<< std::endl;
-		std::cout << "Pi1: "<< pi1 << "\t" << "manual: "<< pi1manual << std::endl;
-		std::cout << "Pi2: "<< pi2 << "\t" << "manual: "<< pi2manual << std::endl;
-		std::cout << "Pi3: "<< pi3 << "\t" << "manual: "<< pi3manual << std::endl;
-		std::cout << "Pi4: "<< pi4 << "\t" << "manual: "<< pi4manual << std::endl;
-		std::cout << "Pi5: "<< pi5 << "\t" << "manual: "<< pi5manual << std::endl;
+		std::cout << "Pi selected: "<< selectPi << std::endl;
+		std::cout << " 0 = stop \t 1 = manual \t 2 = pick up \t 3 = drop off "<< std::endl;
+		std::cout << "Pi1 Instruction: "<< msg.instruction_p1 << std::endl;
+		std::cout << "Pi2 Instruction: "<< msg.instruction_p2 << std::endl;
+		std::cout << "Pi3 Instruction: "<< msg.instruction_p3 << std::endl;
+		std::cout << "Pi4 Instruction: "<< msg.instruction_p4 << std::endl;
+		std::cout << "Pi5 Instruction: "<< msg.instruction_p5 << std::endl;
 		std::cout << "Status:"<< pi2stat << "\t" << "Location: " << pi2loca << std::endl;
     ++count; // this is just here while I dont have keyboard input
   }
